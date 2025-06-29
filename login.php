@@ -13,7 +13,7 @@
     <form method="POST" action="app/login.php" class="shadow p-4">
         <!--utilising display-3 from bootsrtap class for a lighter-weight font styling -->
     <h3 class="display-3">LOGIN</h3>
-    
+
     <?php if (isset($_GET['error'])) {?>
     <div class="alert alert-danger" role="alert">
   <?php echo stripcslashes($_GET['error']); ?>

@@ -21,12 +21,12 @@
 				<img src="img/profile.jpg">
 				<h4>Admin</h4>
 			</div>
-			
-			<?php
-			$user ="admin";
 
-			if($user =="employee"){
-			?>
+			<?php
+                $user = "admin";
+
+                if ($user == "employee") {
+                ?>
 			<!--Employee Navigation Bar-->
 			<ul>
 				<li>
@@ -60,7 +60,7 @@
 					</a>
 				</li>
 			</ul>
-			<?php }else { ?>
+			<?php } else {?>
 				<!--Admin Navigation Bar-->
 					<ul>
 				<li>
@@ -100,10 +100,10 @@
 					</a>
 				</li>
 			</ul>
-			<?php } ?>
+			<?php }?>
 		</nav>
 		<section class="section-1">
-		
+
 		</section>
 	</div>
 
