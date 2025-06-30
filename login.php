@@ -18,13 +18,16 @@
     <div class="alert alert-danger" role="alert">
   <?php echo stripcslashes($_GET['error']); ?>
 </div>
-<?php }?>
+<?php }
+?>
 
 <?php if (isset($_GET['success'])) {?>
 <div class="alert alert-success" role="alert">
  <?php echo stripcslashes($_GET['success']); ?>
 </div>
-<?php }?>
+<?php }
+
+?>
 
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Username</label>

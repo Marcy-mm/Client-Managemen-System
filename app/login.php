@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_POST['user_name']) && isset($_POST['password'])) {
     include "../DB_connection.php";
     function validate_input($data)
@@ -26,12 +27,12 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
 
         if ($stmt->rowCount() == 1) {
             $user       = $stmt->fetch();
-            $usernameDb = $user['user_name'];
-            $passwordDb = $user['[password'];
+            $usernameDb = $user['username'];
+            $passwordDb = $user['password'];
             $role       = $user['role'];
             $id         = $user['id'];
             if ($user_name === $usernameDb) {
-                if (password_verify($password, hash)) {
+                if (password_verify($password, $passwordDb)) {
                     if ($role == "admin") {
                         $_SESSION['role']     = $role;
                         $_SESSION['id']       = $id;
@@ -62,7 +63,6 @@ if (isset($_POST['user_name']) && isset($_POST['password'])) {
             }
         }
     }
-
 } else {
     $em = "Unknown error occured";
     header("Location: ../login.php?error=$em");
