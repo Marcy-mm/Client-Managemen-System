@@ -27,3 +27,30 @@ function get_all_clients($conn)
         return [];
     }
 }
+
+function insert_cllients($conn, $data)
+{
+    $sql = "
+      INSERT INTO clients (client_name, client_code) VALUES(?,?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($data);
+
+}
+
+function get_client_by_id($conn, $id)
+{
+    $sql  = "SELECT * FROM clients WHERE client_id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$id]);
+
+    if ($stmt->rowCount() > 0) {
+        $client = $stmt->fetch();
+
+    } else {
+        $client = 0;
+    }
+
+    return $client;
+
+}
