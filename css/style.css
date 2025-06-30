@@ -173,3 +173,46 @@
   width: 90%;
   margin-top: 30px;
 }
+
+.delete-btn{
+  text-decoration: none;
+  display: inline-block;
+  padding-left: 10px;
+  border: none;
+  background:rgb(207, 0, 7);
+  padding: 10px 15px;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  transition: background 1s;
+  box-shadow: 0 8px 16px 0 rgba(235, 178, 178, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.delete-btn:hover {
+  opacity: 0.6;
+}
+
+
+.edit-btn {
+  text-decoration: none;
+  display: inline-block;
+  padding-left: 10px;
+  border: none;
+  background:rgb(0, 104, 207);
+  padding: 10px 15px;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  transition: background 1s;
+  box-shadow: 0 8px 16px 0 rgba(235, 178, 178, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.edit-btn:hover {
+  opacity: 0.6;
+}
