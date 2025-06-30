@@ -15,8 +15,7 @@
 <?php include "inc/header.php"?>
 	<div class="body">
 		<?php include "inc/nav.php"?>
-		<section class="section-1">
-	</section>
+
 
 	</div>
 
