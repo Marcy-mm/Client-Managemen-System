@@ -4,6 +4,7 @@ function get_all_clients($conn)
 {
     $sql = "
         SELECT
+        clients.client_id,
             clients.name AS client_name,
             clients.client_code,
             COUNT(client_contact.contact_id) AS linked_contacts

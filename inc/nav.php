@@ -57,7 +57,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="create_User.php">
+					<a href="add-client.php">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 						<span>Create User</span>
 					</a>

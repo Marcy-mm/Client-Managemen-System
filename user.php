@@ -25,20 +25,20 @@
                     ?>
            <table class="main-table">
 <tr>
-<th>name</th>
-<th>Client Code</th>
+<th class="client_name">Name</th>
+<th class="client_code">Client Code</th>
 <th>No. of linked contacts</th>
-<th>Action</th>
+<th class="action_client">Action</th>
     </tr>
 <?php foreach ($clients as $client) {?>
 
                <tr>
-                <td><?php echo $client['client_name']?></td>
-                <td><?php echo $client['client_code']?></td>
-                <td><?php echo $client['linked_contacts']?></td>
+                <td><?php echo $client['client_name'] ?></td>
+                <td><?php echo $client['client_code'] ?></td>
+                <td><?php echo $client['linked_contacts'] ?></td>
                 <td>
-                    <a href="edit-client.php?id=<?=$client['client_id']?>" class="edit-btn">Edit</a>
-                    <a href="delete-client.php?id=<?=$client['client_id']?>" class="delete-btn">Delete</a>
+                    <a href="edit-client.php?id=<?php echo $client['client_id']?>" class="edit-btn">Edit</a>
+                    <a href="-client.php?id=<?php echo $client['client_id']?>" class="delete-btn">Delete</a>
 
                 </td>
             </tr>

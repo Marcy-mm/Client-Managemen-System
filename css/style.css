@@ -174,12 +174,12 @@
   margin-top: 30px;
 }
 
-.delete-btn{
+.delete-btn {
   text-decoration: none;
   display: inline-block;
   padding-left: 10px;
   border: none;
-  background:rgb(207, 0, 7);
+  background: rgb(207, 0, 7);
   padding: 10px 15px;
   color: #fff;
   font-size: 16px;
@@ -195,13 +195,12 @@
   opacity: 0.6;
 }
 
-
 .edit-btn {
   text-decoration: none;
   display: inline-block;
   padding-left: 10px;
   border: none;
-  background:rgb(0, 104, 207);
+  background: rgb(0, 104, 207);
   padding: 10px 15px;
   color: #fff;
   font-size: 16px;
@@ -215,4 +214,33 @@
 
 .edit-btn:hover {
   opacity: 0.6;
+}
+
+.client_name,
+.client_code,
+.action_client {
+  text-align: left;
+}
+
+.form-1 {
+  width: 90%;
+  max-width: 500px;
+}
+
+.input-holder lable {
+  display: block;
+  margin-bottom: 5px;
+}
+.input-1 {
+  border: 2px solid #ccc;
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  outline: none;
+  border-radius: 5px;
+  display: block;
+}
+
+.input-1:focus {
+  border-color: #555;
 }
