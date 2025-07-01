@@ -30,22 +30,29 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
 
         if (empty($clientName)) {
             $em = "Client name is required";
-            header("Location: ../add-user.php?error=$em");
+            header("Location: ../add-client.php?error=$em");
             exit();
         } else {
-             include "Model/User.php";
-            $clientCode = generate_client_code($conn);
-            $data = [$clientName, $clientCode];
-            insert_client($conn, $data);
 
+            include "Model/User.php";
+            $clientCode = generate_client_code($conn);
+            $data       = [$clientName, $clientCode];
+            insert_client($conn, $data);
+            $em = "User Created Successfully. Client Code: $clientCode";
+            //urlencode implemented to prevent incorrect query being passed in the URL
+            header("Location: ../add-client.php?success=" .urlencode($em));
+            exit();
         }
-    } else {
-        $em = "Unknown error occured";
+
+    } 
+    else{
+    $em = "Unknown error occured";
+        header("Location: ../add-client.php?error=$em");
+        exit();
+        } 
+}else {
+        $em = "First Login";
         header("Location: ../add-client.php?error=$em");
         exit();
     }
-} else {
-    $em = "First Login";
-    header("Location: ../add-client.php?error=$em");
-    exit();
-}
+

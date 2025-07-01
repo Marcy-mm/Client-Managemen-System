@@ -1,22 +1,22 @@
-<?php
-    session_start();
-    if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "admin") {
-        include "DB_connection.php";
-        include "app/Model/User.php";
+<?php 
+session_start();
+if (isset($_SESSION['role']) && isset($_SESSION['id']) && $_SESSION['role'] == "admin") {
+    include "DB_connection.php";
+    include "app/Model/User.php";
+    
+    if (!isset($_GET['id'])) {
+        header("Location: user.php");
+        exit();
+    }
+    
+    $id = $_GET['id'];
+    $client = get_client_by_id($conn, $id);
 
-        if (! isset($_GET['id'])) {
-            header("Location: user.php");
-            exit();
-        }
-
-        $id     = $_GET['id'];
-        $client = get_client_by_id($conn, $id);
-
-        if ($client == 0) {
-            header("Location: user.php");
-            exit();
-        }
-    ?>
+    if ($client == 0) {
+        header("Location: user.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,40 +26,40 @@
 </head>
 <body>
     <input type="checkbox" id="checkbox">
-    <?php include "inc/header.php"?>
+    <?php include "inc/header.php" ?>
     <div class="body">
-        <?php include "inc/nav.php"?>
+        <?php include "inc/nav.php" ?>
         <section class="section-1">
             <h4 class="title">Edit Client <a href="user.php">Back to Users</a></h4>
-
+            
             <form class="form-1" method="POST" action="app/update-user.php">
-                <?php if (isset($_GET['error'])) {?>
+                <?php if (isset($_GET['error'])) { ?>
                     <div class="danger" role="alert">
-                        <?php echo stripcslashes($_GET['error'])?>
+                        <?= stripcslashes($_GET['error']) ?>
                     </div>
-                <?php }?>
-<?php if (isset($_GET['success'])) {?>
+                <?php } ?>
+                <?php if (isset($_GET['success'])) { ?>
                     <div class="success" role="alert">
-                        <?php echo stripcslashes($_GET['success'])?>
+                        <?= stripcslashes($_GET['success']) ?>
                     </div>
-                <?php }?>
+                <?php } ?>
 
                 <div class="input-holder">
                     <label>Client Name</label>
-                    <input type="text" name="clientName" class="input-1" value="<?php echo htmlspecialchars($client['name'])?>" placeholder="Client Name"><br>
+                    <input type="text" name="clientName" class="input-1" value="<?= htmlspecialchars($client['name']) ?>" placeholder="Client Name"><br>
                 </div>
-
+                
                 <div class="input-holder">
                     <label>Client Code</label>
-                    <input type="text" class="input-1" value="<?php echo htmlspecialchars($client['client_code'])?>" disabled><br>
+                    <input type="text" class="input-1" value="<?= htmlspecialchars($client['client_code']) ?>" disabled><br>
                 </div>
 
                 <div class="input-holder">
                     <label>No. of linked contacts</label>
-                    <input type="text" name="linked_contacts" class="input-1" value="<?php echo $client['linked_contacts'] ?? 0?>" disabled><br>
+                    <input type="text" name="linked_contacts" class="input-1" value="<?= $client['linked_contacts'] ?? 0 ?>" disabled><br>
                 </div>
 
-                <input type="hidden" name="id" value="<?php echo $client['client_id']?>">
+                <input type="text" name="id" value="<?= $client['client_id'] ?>" hidden>
 
                 <button class="edit-btn">Update</button>
             </form>
@@ -72,10 +72,10 @@
     </script>
 </body>
 </html>
-<?php
-    } else {
-        $em = "First login";
-        header("Location: login.php?error=$em");
-        exit();
-    }
+<?php 
+} else { 
+    $em = "First login";
+    header("Location: login.php?error=$em");
+    exit();
+}
 ?>

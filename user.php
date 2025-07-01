@@ -21,8 +21,13 @@
 		<?php include "inc/nav.php"?>
 		<section class="section-1">
             <h4 class="title" >Manage Clients <a href="add-client.php">Add Client</a></h4>
-            <?php if ($clients != 0) {
-                    ?>
+              <?php if (isset($_GET['success'])) {?>
+                    <div class="success" role="alert">
+                        <?php echo stripcslashes($_GET['success']) ?>
+                    </div>
+                <?php }?>
+<?php if ($clients != 0) {
+        ?>
            <table class="main-table">
 <tr>
 <th class="client_name">Name</th>
@@ -37,8 +42,8 @@
                 <td><?php echo $client['client_code'] ?></td>
                 <td><?php echo $client['linked_contacts'] ?></td>
                 <td>
-                    <a href="edit-client.php?id=<?php echo $client['client_id']?>" class="edit-btn">Edit</a>
-                    <a href="-client.php?id=<?php echo $client['client_id']?>" class="delete-btn">Delete</a>
+                    <a href="edit-client.php?id=<?php echo $client['client_id'] ?>" class="edit-btn">Edit</a>
+                    <a href="delete-client.php?id=<?php echo $client ['client_id'] ?>" class="delete-btn"  onclick="return confirm('Delete client <?php echo $client['client_code'] ?>?')">Delete</a>
 
                 </td>
             </tr>

@@ -1,7 +1,7 @@
 <nav class="side-bar">
 			<div class="user-p">
 				<img src="img/profile.jpg">
-				<h4><?php echo $_SESSION['username']?></h4>
+				<h4><?php echo $_SESSION['username'] ?></h4>
 			</div>
 
 			<?php
@@ -62,23 +62,26 @@
 						<span>Create User</span>
 					</a>
 				</li>
-				<li>
-					<a href="#">
+				<li class="active">
+					<a href="contacts.php">
 						<i class="fa fa-list" aria-hidden="true"></i>
+						<span>Manage Contacts</span>
+					</a>
+				</li>
+				<li>
+					<a href="add-contact.php">
+						<i class="fa fa-plus" aria-hidden="true"></i>
 						<span>Create Contacts</span>
 					</a>
 				</li>
 				<li>
 					<a href="#">
-						<i class="fa fa-bell" aria-hidden="true"></i>
+						<i class="fa fa-link" aria-hidden="true"></i>
 						<span>Link Contacts</span>
 					</a>
 				</li>
 				<li>
-					<a href="logout.php">
-						<i class="fa fa-sign-out" aria-hidden="true"></i>
-						<span>Logout</span>
-					</a>
+
 				</li>
 			</ul>
 			<?php }?>

@@ -28,16 +28,34 @@ function get_all_clients($conn)
     }
 }
 
-function insert_cllients($conn, $data)
+function insert_client($conn, $data)
 {
     $sql = "
-      INSERT INTO clients (client_name, client_code) VALUES(?,?)";
+      INSERT INTO clients (name, client_code) VALUES(?,?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($data);
+
+}
+function update_client($conn, $data)
+{
+    $sql = "
+      UPDATE clients SET name=? WHERE client_id=?";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute($data);
 
 }
 
+function delete_client($conn, $data)
+{
+    $sql = "
+      DELETE FROM clients WHERE client_id=?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($data);
+
+}
 function get_client_by_id($conn, $id)
 {
     $sql  = "SELECT * FROM clients WHERE client_id=?";

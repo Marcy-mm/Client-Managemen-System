@@ -246,13 +246,30 @@
 }
 
 .danger {
-  background:#FF98AA ;
-  color: #B20008;
+  background: #ff98aa;
+  color: #b20008;
   padding: 10px;
 }
 
 .success {
-  background:#FF98AA ;
-  color:rgb(24, 163, 17);
+  background: rgb(39, 188, 61);
+  color: rgb(27, 52, 25);
   padding: 10px;
+}
+
+#logout {
+  padding-left: 70rem;
+  left-padding: px;
+  float: right; /* Align right */
+  color: white; /* Text color white */
+  text-decoration: none; /* Remove underline */
+  display: flex; /* To align icon and text nicely */
+  align-items: center; /* Vertically center icon and text */
+  gap: 5px; /* Space between icon and text */
+}
+
+/* Optional: change hover color */
+#logout:hover {
+  color: #ccc;
+  text-decoration: none;
 }
