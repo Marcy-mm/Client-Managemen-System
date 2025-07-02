@@ -22,7 +22,7 @@
             </h4>
 
            <?php if (isset($_GET['error'])) {?>
-    <div class="danger" role="alert">
+    <div id= "errorBox" class="danger" role="alert">
         <?php echo htmlspecialchars($_GET['error']); ?>
    </div>
 <?php
@@ -63,18 +63,20 @@
         </section>
     </div>
 
-    <script>
-document.getElementById('createContactForm').addEventListener('submit', function(e) {
-  const email = this.email.value.trim();
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!re.test(email)) {
-    e.preventDefault();
-    alert('Please enter a valid email address.');
-  }
-});
-</script>
-
+ <script>
+    document.getElementById('createContactForm').addEventListener('submit', function(e){
+const email = this.email.value.trim();
+const errorBox = document.getElementById('errorBox');
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+errorBox.textContent ='';
+    if(!re.test(email)){
+        e.preventDefault();
+        errorBox.textContent = 'Please enter a valid email address.'
+        
+    }
+}
+);
+    </script>
 </body>
 </html>
 <?php

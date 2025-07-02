@@ -28,6 +28,7 @@ function get_all_clients($conn)
     }
 }
 
+
 function insert_client($conn, $data)
 {
     $sql = "

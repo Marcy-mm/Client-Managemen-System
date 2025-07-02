@@ -53,16 +53,18 @@
     <?php
         if (! empty($contact['client_codes']) && ! empty($contact['client_ids'])):
                     $codes = explode(', ', $contact['client_codes']);
-                    $ids   = explode(',', $contact['client_ids']);
+                    $ids   = array_map('trim', explode(',', $contact['client_ids']));
 
                 for ($i = 0; $i < count($codes); $i++): ?>
 	            <div>
 	                
-	               <a href="unlink-client.php?contact_id=<?= $contact['contact_id'] ?>&client_id=<?= $ids[$i] ?>"
-	                   class="edit-btn"
-	                   onclick="return confirm('Unlink from <?php echo $codes[$i]?>?')">
-	                   Unlink
-	                </a>
+	             <a
+  href="unlink-client.php?contact_id=<?= $contact['contact_id'] ?>&client_id=<?= $ids[$i] ?>"
+  onclick="return confirm('Unlink this client?')"
+  class="edit-btn"
+>
+  Unlink
+</a>
 	            </div>
 	        <?php endfor;
                         else:

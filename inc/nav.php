@@ -75,7 +75,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="link-contact.php">
 						<i class="fa fa-link" aria-hidden="true"></i>
 						<span>Link Contacts</span>
 					</a>

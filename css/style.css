@@ -246,6 +246,7 @@
 }
 
 .danger {
+  max-width: 500px;
   background: #ff98aa;
   color: #b20008;
   padding: 10px;

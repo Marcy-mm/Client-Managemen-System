@@ -1,16 +1,11 @@
 <?php
-function get_contact_by_id(PDO $conn, int $client_id): array
+function get_contact_by_id(PDO $conn, int $contact_id): array
 {
-    $sql = "
-        SELECT c.contact_id, c.name, c.surname, c.email, cl.client_code
-        FROM contacts c
-        JOIN client_contact cc ON cc.contact_id = c.contact_id
-        JOIN clients cl ON cl.client_id = cc.client_id
-        WHERE cc.client_id = ?
-    ";
+    $sql  = "SELECT * FROM contacts WHERE contact_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$client_id]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->execute([$contact_id]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result : [];
 }
 function get_all_contacts($conn)
 {
@@ -61,4 +56,36 @@ function insert_contact(PDO $conn, array $data): void
     $sql  = "INSERT INTO contacts (name, surname, email) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->execute($data);
+}
+function get_all_clients($conn)
+{
+    $stmt = $conn->prepare("SELECT client_id, name, client_code FROM clients ORDER BY name ASC");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function is_contact_linked($conn, $contact_id)
+{
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM client_contact WHERE contact_id = ?");
+    $stmt->execute([$contact_id]);
+    return $stmt->fetchColumn() > 0;
+}
+function get_unlinked_contacts($conn)
+{
+    $sql = "
+        SELECT * FROM contacts
+        WHERE contact_id NOT IN (
+            SELECT contact_id FROM client_contact
+        )
+        ORDER BY name ASC
+    ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function link_contact_to_client($conn, $client_id, $contact_id)
+{
+    $stmt = $conn->prepare("INSERT INTO client_contact (client_id, contact_id) VALUES (?, ?)");
+    return $stmt->execute([$client_id, $contact_id]);
 }
