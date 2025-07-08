@@ -9,8 +9,8 @@ if (isset($_SESSION['role'], $_SESSION['id'])) {
         $contact_id = $_POST['contact_id'];
 
         // Check if already linked
-        if (is_contact_linked($conn, $contact_id)) {
-            header("Location: ../link-contact.php?error=" . urlencode("Contact already linked to a client."));
+        if (is_contact_linked($conn, $contact_id, $client_id)) {
+            header("Location: ../link-contact.php?error=" . urlencode("This contact is already linked to this client."));
             exit();
         }
 

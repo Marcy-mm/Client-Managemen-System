@@ -229,7 +229,25 @@
   opacity: 0.6;
 }
 
+.unlink-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns left */
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.contact-email {
+  background: #eef;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  min-width: 180px;
+  color: #333;
+  
+}
 .edit-btn {
+  min-width: 80px;
   text-decoration: none;
   display: inline-block;
   padding-left: 10px;

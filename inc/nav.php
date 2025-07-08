@@ -53,13 +53,13 @@
 				<li >
 					<a href="user.php">
 						<i class="fa fa-users" aria-hidden="true"></i>
-						<span>Manage Users</span>
+						<span>Manage Clients</span>
 					</a>
 				</li>
 				<li>
 					<a href="add-client.php">
 						<i class="fa fa-plus" aria-hidden="true"></i>
-						<span>Create User</span>
+						<span>Create Client</span>
 					</a>
 				</li>
 				<li>

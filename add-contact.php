@@ -1,5 +1,10 @@
 <?php
     session_start();
+    // Prevent back navigation after logout
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+
     if (isset($_SESSION['role'], $_SESSION['id'])) {
     ?>
 <!DOCTYPE html>
@@ -22,7 +27,7 @@
             </h4>
 
            <?php if (isset($_GET['error'])) {?>
-    <div id= "errorBox" class="danger" role="alert">
+    <div id="errorBox" class="danger" role="alert">
         <?php echo htmlspecialchars($_GET['error']); ?>
    </div>
 <?php
@@ -71,8 +76,9 @@ const errorBox = document.getElementById('errorBox');
 errorBox.textContent ='';
     if(!re.test(email)){
         e.preventDefault();
-        errorBox.textContent = 'Please enter a valid email address.'
-        
+        errorBox.textContent = 'Please enter a valid email address.';
+        errorBox.style.display = 'block';
+
     }
 }
 );

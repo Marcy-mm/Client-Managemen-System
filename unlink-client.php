@@ -6,8 +6,8 @@ if (! isset($_SESSION['role'], $_SESSION['id']) || $_SESSION['role'] !== 'admin'
 }
 
 // 1) Grab and cast the IDs
-$contact_id = isset($_GET['contact_id']) ? (int)$_GET['contact_id'] : 0;
-$client_id  = isset($_GET['client_id'])  ? (int)$_GET['client_id']  : 0;
+$contact_id = isset($_GET['contact_id']) ? (int) $_GET['contact_id'] : 0;
+$client_id  = isset($_GET['client_id']) ? (int) $_GET['client_id'] : 0;
 
 if ($contact_id <= 0 || $client_id <= 0) {
     header("Location: contacts.php?error=" . urlencode("Invalid link parameters"));
@@ -19,7 +19,7 @@ include "app/Model/Contact.php";
 
 // 2) Verify they exist
 $contact = get_contact_by_id($conn, $contact_id);
-$client  = get_client_by_id($conn, $client_id);
+$client  = get_clientid($conn, $client_id);
 
 if (empty($contact) || $client === 0) {
     header("Location: contacts.php?error=" . urlencode("Contact or client not found"));

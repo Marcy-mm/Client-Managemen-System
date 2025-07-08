@@ -9,31 +9,35 @@ function get_contact_by_id(PDO $conn, int $contact_id): array
 }
 function get_all_contacts($conn)
 {
-    $sql = "
-        SELECT
-            contacts.contact_id,
-            contacts.name,
-            contacts.surname,
-            contacts.email,
-            GROUP_CONCAT(clients.client_code SEPARATOR ', ') AS client_codes,
-             GROUP_CONCAT(clients.client_id SEPARATOR ',') AS client_ids
-        FROM contacts
-        LEFT JOIN client_contact ON contacts.contact_id = client_contact.contact_id
-        LEFT JOIN clients ON client_contact.client_id = clients.client_id
-        GROUP BY contacts.contact_id, contacts.name, contacts.surname, contacts.email
-        ORDER BY contacts.name ASC
-    ";
+    $sql = "SELECT
+                c.contact_id,
+                c.name,
+                c.surname,
+                c.email,
+                COUNT(cc.client_id) AS client_count,
+                GROUP_CONCAT(cl.name SEPARATOR ', ') AS client_names,
+                GROUP_CONCAT(cl.client_code SEPARATOR ', ') AS client_codes,
+                GROUP_CONCAT(cl.client_id SEPARATOR ',') AS client_ids
+            FROM contacts c
+            LEFT JOIN client_contact cc ON c.contact_id = cc.contact_id
+            LEFT JOIN clients cl ON cc.client_id = cl.client_id
+            GROUP BY c.contact_id
+            ORDER BY c.name";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($stmt->rowCount() > 0) {
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        return [];
-    }
+    return $results;
 }
-function get_client_by_id($conn, $id)
+function get_clients($conn)
+{
+    $stmt = $conn->prepare("SELECT client_id, name, client_code FROM clients ORDER BY name ASC");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_clientid($conn, $id)
 {
     $sql  = "SELECT * FROM clients WHERE client_id = ?";
     $stmt = $conn->prepare($sql);
@@ -41,6 +45,7 @@ function get_client_by_id($conn, $id)
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result ? $result : 0;
 }
+
 
 function unlink_client($conn, $data)
 {
@@ -57,19 +62,18 @@ function insert_contact(PDO $conn, array $data): void
     $stmt = $conn->prepare($sql);
     $stmt->execute($data);
 }
-function get_all_clients($conn)
+
+
+function is_contact_linked($conn, $contact_id, $client_id)
 {
-    $stmt = $conn->prepare("SELECT client_id, name, client_code FROM clients ORDER BY name ASC");
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "SELECT * FROM client_contact
+            WHERE contact_id = ? AND client_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$contact_id, $client_id]);
+
+    return $stmt->rowCount() > 0;
 }
 
-function is_contact_linked($conn, $contact_id)
-{
-    $stmt = $conn->prepare("SELECT COUNT(*) FROM client_contact WHERE contact_id = ?");
-    $stmt->execute([$contact_id]);
-    return $stmt->fetchColumn() > 0;
-}
 function get_unlinked_contacts($conn)
 {
     $sql = "

@@ -1,14 +1,19 @@
 <?php
     session_start();
+    // Prevent back navigation after logout
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
     if (isset($_SESSION['role'], $_SESSION['id'])) {
         include "DB_connection.php";
         include "app/Model/Contact.php";
 
         // Get all clients
-        $clients = get_all_clients($conn);
+        $clients = get_clients($conn);
 
         // Get contacts not already linked
-        $unlinked_contacts = get_unlinked_contacts($conn);
+        $unlinked_contacts = get_all_contacts($conn);
     ?>
 <!DOCTYPE html>
 <html>

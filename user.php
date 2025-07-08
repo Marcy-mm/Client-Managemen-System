@@ -1,5 +1,11 @@
 <?php
     session_start();
+
+    // Prevent back navigation after logout
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+
     if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
         include "DB_connection.php";
         include "app/Model/User.php";
@@ -26,26 +32,47 @@
                         <?php echo stripcslashes($_GET['success']) ?>
                     </div>
                 <?php }?>
-<?php if ($clients != 0) {
+<?php if (! empty($clients)) {
         ?>
            <table class="main-table">
 <tr>
 <th class="client_name">Name</th>
 <th class="client_code">Client Code</th>
 <th>No. of linked contacts</th>
-<th class="action_client">Action</th>
+<th></th> <!-- No heading for unlink -->
+
     </tr>
 <?php foreach ($clients as $client) {?>
 
                <tr>
-                <td><?php echo $client['client_name'] ?></td>
+                <td><?php echo $client['name'] ?></td>
                 <td><?php echo $client['client_code'] ?></td>
                 <td><?php echo $client['linked_contacts'] ?></td>
-                <td>
-                    <a href="edit-client.php?id=<?php echo $client['client_id'] ?>" class="edit-btn">Edit</a>
-                    <a href="delete-client.php?id=<?php echo $client ['client_id'] ?>" class="delete-btn"  onclick="return confirm('Delete client <?php echo $client['client_code'] ?>?')">Delete</a>
+        <td>
+            <?php
+                if (! empty($client['contact_ids']) && ! empty($client['contact_emails'])):
+                                $ids    = explode(',', $client['contact_ids']);
+                                $emails = explode(', ', $client['contact_emails']);
 
-                </td>
+                            for ($i = 0; $i < count($ids); $i++): ?>
+								                   <div class="unlink-entry">
+				                    <span class="contact-email"><?php echo htmlspecialchars($emails[$i]); ?></span>
+				                    <a
+								                          href="unlink-contact.php?client_id=<?php echo $client['client_id'] ?>&contact_id=<?php echo trim($ids[$i]) ?>"
+								                          
+								                          onclick="return confirm('Unlink contact?')"
+                                                          class="edit-btn"
+								                        >
+								                            Unlink
+								                        </a>
+								                    </div>
+								                <?php endfor;
+                                                                else:
+                                                                    echo 'No contacts linked';
+                                                                endif;
+                                                            ?>
+        </td>
+
             </tr>
 <?php }?>
            </table>
