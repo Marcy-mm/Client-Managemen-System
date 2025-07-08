@@ -12,6 +12,11 @@
   background: #23242b;
   color: #fff;
 }
+.left-header {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* spacing between title and bars icon */
+}
 .u-name {
   font-size: 20px;
   padding-left: 17px;
@@ -111,15 +116,44 @@
 }
 
 .login-body {
+  min-height: 100vh;
+  background: url("../img/loginbg.jpeg");
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
 
 .login-body form {
-  max-width: 420px;
-  width: 90%;
+  background: #fff; /* White background */
+  padding: 30px 40px; /* Space inside the box */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  max-width: 400px; /* Max width for the form */
+  width: 100%; /* Responsive width */
+  margin: auto; /* Center horizontally */
+}
+
+.dashboard {
+  width: 100%;
+  background: url("../img/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.dashboard h1 {
+  color: rgb(2, 44, 68);
+  font-size: 60px;
+}
+.dashboard p {
+  color: #127b8e;
+  font-size: 20px;
+  background: #fff;
+  padding: 7px;
+  border-radius: 5px;
 }
 
 .section-1 {
@@ -253,20 +287,20 @@
 }
 
 .success {
+  max-width: 500px;
   background: rgb(39, 188, 61);
   color: rgb(27, 52, 25);
   padding: 10px;
 }
 
 #logout {
-  padding-left: 70rem;
-  left-padding: px;
-  float: right; /* Align right */
-  color: white; /* Text color white */
-  text-decoration: none; /* Remove underline */
-  display: flex; /* To align icon and text nicely */
-  align-items: center; /* Vertically center icon and text */
-  gap: 5px; /* Space between icon and text */
+  margin-left: auto;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
 }
 
 /* Optional: change hover color */

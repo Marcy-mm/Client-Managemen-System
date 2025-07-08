@@ -15,10 +15,19 @@
 <?php include "inc/header.php"?>
 	<div class="body">
 		<?php include "inc/nav.php"?>
-
+<section class="dashboard">
+		<h1>WELCOME TO THE MARS</h1>
+		<p>Client Management System</p>
+	</section>
 
 	</div>
 
+
+
+ <script type="text/javascript">
+	var active = document.querySelector("#navList li:nth-child(1)");
+	active.classList.add("active");
+</script>
 </body>
 </html>
 <?php } else {

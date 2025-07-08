@@ -11,7 +11,7 @@
 			<!--Employee Navigation Bar-->
 			<ul>
 				<li>
-					<a href="#">
+					<a href="index.php">
 						<i class="fa fa-tachometer" aria-hidden="true"></i>
 						<span>Dashboard</span>
 					</a>
@@ -43,14 +43,14 @@
 			</ul>
 			<?php } else {?>
 				<!--Admin Navigation Bar-->
-					<ul>
+					<ul id="navList">
 				<li>
-					<a href="#">
+					<a href="index.php">
 						<i class="fa fa-tachometer" aria-hidden="true"></i>
 						<span>Dashboard</span>
 					</a>
 				</li>
-				<li class="active">
+				<li >
 					<a href="user.php">
 						<i class="fa fa-users" aria-hidden="true"></i>
 						<span>Manage Users</span>
@@ -62,7 +62,7 @@
 						<span>Create User</span>
 					</a>
 				</li>
-				<li class="active">
+				<li>
 					<a href="contacts.php">
 						<i class="fa fa-list" aria-hidden="true"></i>
 						<span>Manage Contacts</span>

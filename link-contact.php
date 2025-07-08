@@ -29,6 +29,9 @@
             <a href="contacts.php">View Contacts</a>
         </h4>
 
+
+        <form class="form-1" method="POST" action="app/link-contact.php">
+
         <?php if (isset($_GET['error'])): ?>
             <div class="danger" id="error-box"><?php echo htmlspecialchars($_GET['error']); ?></div>
         <?php endif; ?>
@@ -36,8 +39,16 @@
         <?php if (isset($_GET['success'])): ?>
             <div class="success"><?php echo htmlspecialchars($_GET['success']); ?></div>
         <?php endif; ?>
+              <div class="input-holder">
+                <label>Contact</label><br>
+                <select name="contact_id" class="input-1" >
+                    <option value="" disabled selected>Select Contact</option>
+                    <?php foreach ($unlinked_contacts as $contact): ?>
+                        <option value="<?php echo $contact['contact_id'] ?>"><?php echo htmlspecialchars($contact['name'] . ' ' . $contact['surname']) ?></option>
+                    <?php endforeach; ?>
+                </select><br><br>
+            </div>
 
-        <form class="form-1" method="POST" action="app/link-contact.php">
             <div class="input-holder">
                 <label>Client</label><br>
                 <select name="client_id" class="input-1" >
@@ -48,15 +59,6 @@
                 </select><br><br>
             </div>
 
-            <div class="input-holder">
-                <label>Contact</label><br>
-                <select name="contact_id" class="input-1" >
-                    <option value="" disabled selected>Select Contact</option>
-                    <?php foreach ($unlinked_contacts as $contact): ?>
-                        <option value="<?php echo $contact['contact_id'] ?>"><?php echo htmlspecialchars($contact['name'] . ' ' . $contact['surname']) ?></option>
-                    <?php endforeach; ?>
-                </select><br><br>
-            </div>
 
             <button class="edit-btn" type="submit">Link</button>
         </form>
@@ -86,7 +88,10 @@ document.getElementById('linkForm').addEventListener('submit', function(e) {
   }
 });
 </script>
-
+<script type="text/javascript">
+	var active = document.querySelector("#navList li:nth-child(6)");
+	active.classList.add("active");
+</script>
 </body>
 </body>
 </html>
