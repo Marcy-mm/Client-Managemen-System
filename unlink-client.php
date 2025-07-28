@@ -31,9 +31,9 @@ $deleted = unlink_client($conn, [$client_id, $contact_id]);
 
 if ($deleted > 0) {
     $msg = "Client unlinked successfully.";
-    header("Location: contacts.php?success=" . urlencode($msg));
+    header("Location: linked-clients.php?contact_id=". $contact_id ."&success=" . urlencode($msg));
 } else {
     $err = "No link found to unlink.";
-    header("Location: contacts.php?error=" . urlencode($err));
+    header("Location: linked-clients.php?contact_id&error=" . urlencode($err));
 }
 exit();

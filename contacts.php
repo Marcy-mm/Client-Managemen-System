@@ -34,7 +34,7 @@
                     </div>
                 <?php }?>
 
-            <?php if (!empty($contacts)) {?>
+            <?php if (! empty($contacts)) {?>
                 <table class="main-table">
 
                         <tr>
@@ -57,27 +57,14 @@
 
 
                           <td>
-    <?php
-        if (! empty($contact['client_codes']) && ! empty($contact['client_ids'])):
-                    $codes = explode(', ', $contact['client_codes']);
-                    $ids   = array_map('trim', explode(',', $contact['client_ids']));
+    <?php if ($contact['client_count'] > 0): ?>
+    <a href="linked-clients.php?contact_id=<?php echo $contact['contact_id']; ?>" class="edit-btn">
+        View/ Unlink Clients
+    </a>
+<?php else: ?>
+    <span>No Clients Linked</span>
+<?php endif; ?>
 
-                for ($i = 0; $i < count($codes); $i++): ?>
-						         <div class="unlink-entry">
-				        <span class="contact-email"><?php echo $codes[$i]; ?></span>
-						        <a
-						          href="unlink-client.php?contact_id=<?php echo $contact['contact_id'] ?>&client_id=<?php echo $ids[$i] ?>"
-						          onclick="return confirm('Unlink this client?')"
-						          class="edit-btn"
-						        >
-						          Unlink
-						        </a>
-						    </div>
-						<?php endfor;
-                                    else:
-                                        echo 'No Clients Linked';
-                                    endif;
-                                ?>
 </td>
 
                         </tr>

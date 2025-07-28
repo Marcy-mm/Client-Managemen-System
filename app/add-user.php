@@ -10,57 +10,63 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
             $data = htmlspecialchars($data);
             return $data;
         }
-        function generate_alpha_part($name)
+             function generate_alpha_part($name)
         {
-            $name = strtoupper($name);
-            preg_match_all('/\b[A-Z]/', $name, $matches);
+            $words = preg_split('/\s+/', strtoupper($name));
+            $initials = '';
 
-            $initials = implode('', $matches[0]);
-
-            if (strlen($initials) >= 3) {
-                return substr($initials, 0, 3);
-            } elseif (strlen($initials) > 0) {
-                // Pad with A-Z if initials are fewer than 3
-                $pad = range('A', 'Z');
-                $i   = 0;
-                while (strlen($initials) < 3) {
-                    $initials .= $pad[$i++];
+            // If the name has multiple words, get first letters
+            if (count($words) > 1) {
+                foreach ($words as $word) {
+                    if (ctype_alpha($word[0])) {
+                        $initials .= $word[0];
+                    }
                 }
+
+                // Pad if less than 3
+                if (strlen($initials) < 3) {
+                    $pad = range('A', 'Z');
+                    $i = 0;
+                    while (strlen($initials) < 3) {
+                        $initials .= $pad[$i++];
+                    }
+                }
+
                 return substr($initials, 0, 3);
             } else {
-                // Fallback: take first 3 letters of the name (only alpha)
-                $name = preg_replace('/[^A-Z]/', '', $name);
-                if (strlen($name) >= 3) {
-                    return substr($name, 0, 3);
-                } else {
+                // If it's a single word like Bankofnamibia
+                $singleWord = preg_replace('/[^A-Z]/', '', strtoupper($name));
+                $initials = substr($singleWord, 0, 3);
+
+                // Pad if less than 3
+                if (strlen($initials) < 3) {
                     $pad = range('A', 'Z');
-                    $i   = 0;
-                    while (strlen($name) < 3) {
-                        $name .= $pad[$i++];
+                    $i = 0;
+                    while (strlen($initials) < 3) {
+                        $initials .= $pad[$i++];
                     }
-                    return substr($name, 0, 3);
                 }
+
+                return strtoupper($initials);
             }
         }
 
-        function generate_client_code($conn, $clientName)
+
+    function get_next_suffix($conn)
         {
-            $prefix = generate_alpha_part($clientName);
+            $stmt = $conn->prepare("SELECT client_code FROM clients");
+            $stmt->execute();
+            $codes = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-            $stmt = $conn->prepare("SELECT client_code FROM clients WHERE client_code LIKE ?");
-            $stmt->execute([$prefix . '%']);
-            $existingCodes = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-            $maxSuffix = 0;
-            foreach ($existingCodes as $code) {
-                $suffix = (int) substr($code, 3);
-                if ($suffix > $maxSuffix) {
-                    $maxSuffix = $suffix;
+            $max = 0;
+            foreach ($codes as $code) {
+                $num = (int) substr($code, -3); // Get last 3 digits
+                if ($num > $max) {
+                    $max = $num;
                 }
             }
 
-            $nextSuffix = str_pad($maxSuffix + 1, 3, '0', STR_PAD_LEFT);
-            return $prefix . $nextSuffix;
+            return str_pad($max + 1, 3, '0', STR_PAD_LEFT);
         }
 
         $clientName = validate_input($_POST['clientName']);
@@ -73,24 +79,27 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
 
         include "Model/User.php";
 
+      
         if (client_exists($conn, $clientName)) {
             $em = "A client with this name already exists.";
             header("Location: ../add-client.php?error=" . urlencode($em));
             exit();
         }
 
-        $clientCode = generate_client_code($conn, $clientName);
-        $data       = [$clientName, $clientCode];
+        $prefix = generate_alpha_part($clientName);
+        $suffix = get_next_suffix($conn);
+        $clientCode = $prefix . $suffix;
+        $data = [$clientName, $clientCode];
         if (insert_client($conn, $data)) {
-            $em = "User Created Successfully. Client Code: $clientCode";
-            //urlencode implemented to prevent incorrect query being passed in the URL
-            header("Location: ../add-client.php?success=" . urlencode($em));
+            $sm = "Client Created Successfully. Client Code: $clientCode";
+            header("Location: ../add-client.php?success=" . urlencode($sm));
             exit();
         } else {
             $em = "Failed to insert client.";
             header("Location: ../add-client.php?error=" . urlencode($em));
             exit();
         }
+
 
     } else {
         $em = "Unknown error occurred";
