@@ -21,7 +21,7 @@
 
     // Fetch linked contacts
     $stmt = $conn->prepare("
-    SELECT c.contact_id, c.name, c.email
+    SELECT c.contact_id, c.name, c.surname, c.email
     FROM contacts c
     JOIN client_contact cc ON cc.contact_id = c.contact_id
     WHERE cc.client_id = ?
@@ -54,13 +54,13 @@
         <?php if (count($contacts) > 0): ?>
             <table class="main-table">
                 <tr>
-                    <th>Contact Name</th>
+                    <th>Full Name</th>
                     <th>Email</th>
                     <th>Action</th>
                 </tr>
                 <?php foreach ($contacts as $contact): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($contact['name']) ?></td>
+                         <td><?php echo htmlspecialchars($contact['name'] . ' ' . $contact['surname']) ?></td>
                         <td><?php echo htmlspecialchars($contact['email']) ?></td>
                         <td>
                             <a href="unlink-contact.php?client_id=<?php echo $client_id ?>&contact_id=<?php echo $contact['contact_id'] ?>"

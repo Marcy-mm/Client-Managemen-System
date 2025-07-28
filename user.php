@@ -78,4 +78,4 @@
         header("Location: login.php?error=$em");
         exit();
 }
-?>
+?> how o create a search bar here to help the admin find clients easier

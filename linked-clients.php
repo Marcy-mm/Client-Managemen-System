@@ -41,7 +41,7 @@
 <div class="body">
     <?php include "inc/nav.php"; ?>
     <section class="section-1">
-        <h4 class="title">Linked Clients for Contact:                                                                                                                                                                                                                                                                                                                               <?php echo htmlspecialchars($contact['name'] . " " . $contact['surname']); ?>
+        <h4 class="title">Linked Clients for Contact:                                                                                                                                                                                                                                                                                                                                                                                    <?php echo htmlspecialchars($contact['name'] . " " . $contact['surname']); ?>
             <a href="contacts.php" class="btn">Back to Contacts</a>
         </h4>
 
